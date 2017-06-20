@@ -47,7 +47,6 @@ class RoomsContainer extends Component {
 
   render() {
     const rooms = this.props.rooms.map((room) => { 
-    debugger
       return ( 
         <ListGroupItem key={room.title} onClick={this.handleOnClick.bind(null, room)}>
           {room.title}

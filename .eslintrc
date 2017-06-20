@@ -21,6 +21,9 @@
     "jquery": true,
     "mocha": true
   },
+  "globals": {
+        "socket": true
+    },
   "rules": {
     "quotes": 0,
     "no-console": 1,

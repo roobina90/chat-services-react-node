@@ -136,10 +136,9 @@ io.on('connection', function(socket) {
   })
 });
 
-mongoose.connect('mongodb://admin:aech1234@ds163397.mlab.com:63397/react-chat')
-const db = mongoose.connection;
+// mongoose.connect('mongodb://admin:aech1234@ds163397.mlab.com:63397/react-chat')
+// const db = mongoose.connection;
 
-db.once('open', () => {
  server.listen(port, function(err) {
    if (err) {
      console.log(err);
@@ -147,15 +146,3 @@ db.once('open', () => {
      open(`http://localhost:${port}`);
   }
 });
-
-
-// app.post('/messages', (req, res) => {
-//   console.log(req.body)      
-//     let message = new Message({user: req.body.user, content: req.body.message, room: room})
-//     message.save((err) => { 
-//       if (err) return err
-//     })
-//       res.json(req.body) 
-//  })
-
-})
