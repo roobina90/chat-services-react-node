@@ -10,8 +10,8 @@ export default {
     // }
   ],
 
-  activeRoom: {
+  activeRoom: null//{
     // title: 'Jan_Kowalski',
     // messages: [{ user: 'Bot', message: 'Hello1' }, { user: 'Jan_Kowalski', message: 'Hello2' }]
-  }
+  //}
 }

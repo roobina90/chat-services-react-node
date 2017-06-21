@@ -3,7 +3,6 @@ import initialState from './initialState'
 export default function activeRoomReducer(state = initialState.activeRoom, action) {
   switch(action.type) {
     case 'JOIN_ROOM': {
-      debugger;
       return {
         title: action.payload[0].room,
         messages: action.payload.map((msg) => {

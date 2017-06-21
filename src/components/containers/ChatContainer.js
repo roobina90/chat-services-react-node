@@ -22,7 +22,6 @@ class ChatContainer extends Component {
      this.handleOnChange = this.handleOnChange.bind(this)
      this.handleOnSubmit = this.handleOnSubmit.bind(this)
      this._handleMessageEvent = this._handleMessageEvent.bind(this)
-     this._handleFileUpload = this._handleFileUpload.bind(this)
      this._init = this._init.bind(this)
    }  
 
@@ -33,7 +32,6 @@ class ChatContainer extends Component {
 
   componentDidMount(){
     //console.log('did mount')
-    this._handleFileUpload()
     this._handleMessageEvent()  
   }
 
@@ -44,26 +42,20 @@ class ChatContainer extends Component {
   handleOnSubmit(ev) {
     
     ev.preventDefault()
-    socket.emit('chat message', {message: this.state.input, room: this.props.room.title, user: this.props.user})
+    socket.emit('chat message', {message: this.state.input, room: this.props.room.title, user: "Bot"})
     this.setState({ input: '' })
   }
 
   _handleMessageEvent(){
     socket.on('chat message', (inboundMessage) => {
-       this.props.createMessage({room: this.props.room, newMessage: {user: JSON.parse(inboundMessage).user, message: JSON.parse(inboundMessage).message}}) 
+       this.props.createMessage({room: this.props.room, newMessage: {user: "Bot", message: JSON.parse(inboundMessage).message}}) 
        console.log('received message', inboundMessage)
      })
-  }
-
-  _handleFileUpload(){
-    socket.on('file_upload_success', (data) => {
-      console.log('file upload action was emitted', data.file)
-      this.props.createMessage({room: this.props.room, newMessage: { user: data.user, image: data.file}})
-    })
   }
   
   _init(){
     if(!(this.state.connected)){ 
+      console.log("Elo elo jestem w initi w chat container")
       this.props.fetchRoom()
       socket.emit('subscribe', {room: this.props.room.title})
         this.setState({connected: true})
@@ -71,12 +63,10 @@ class ChatContainer extends Component {
   }
 
   render() {
-         
     return (
       <div>
-        <PageHeader> Welcome to React Chat, {this.props.user} </PageHeader>
-        <ChatLog messages={this.props.messages} image={''}/>
-        <form>
+      Hello in room {this.props.room.title} bastards!
+      <form>
           <FormGroup>
             <InputGroup>
             <FormControl onChange={this.handleOnChange} value={this.state.input}/>
@@ -89,8 +79,8 @@ class ChatContainer extends Component {
           </InputGroup>
         </FormGroup>
         </form>
-        <FileUploader /> 
-
+        {<ChatLog messages={this.props.messages}/>}
+        
    </div>
     )
   }
@@ -98,7 +88,7 @@ class ChatContainer extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return { messages: state.activeRoom.messages, room: state.activeRoom, user: state.user }
+  return { messages: state.activeRoom.messages, room: state.activeRoom }
 }
 
 function mapDispatchToProps(dispatch) {

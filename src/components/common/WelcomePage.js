@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 //import * as userActions from '../../actions/userActions'
 import { connect } from 'react-redux'
 import RoomsContainer from '../containers/roomsContainer'
+import ChatContainer from '../containers/ChatContainer'
 import { InputGroup, Button, PageHeader, FormGroup, FormControl, Col } from 'react-bootstrap'
 
 
@@ -32,6 +33,7 @@ class WelcomePage extends Component {
       <Col xs={10} xsOffset={1} >
         <PageHeader>Welcome on chat page! Please choose a room! :-)</PageHeader>
         <RoomsContainer />
+       {this.props.activeRoom != null && <ChatContainer />} 
         {/*<form onSubmit={this.handleOnSubmit}>
           <FormGroup>
             <InputGroup value={this.state.input}>
@@ -57,4 +59,8 @@ class WelcomePage extends Component {
 //   }
 // }
 
-export default WelcomePage;
+function mapStateToProps(state){
+ return { activeRoom: state.activeRoom }  
+}
+
+export default connect(mapStateToProps)(WelcomePage);
