@@ -1,58 +1,60 @@
 import React, { Component } from 'react'
-import * as userActions from '../../actions/userActions'
+//import * as userActions from '../../actions/userActions'
 import { connect } from 'react-redux'
-import { InputGroup, Button, PageHeader, FormGroup, FormControl } from 'react-bootstrap'
+import RoomsContainer from '../containers/roomsContainer'
+import { InputGroup, Button, PageHeader, FormGroup, FormControl, Col } from 'react-bootstrap'
 
 
-class WelcomePage extends Component { 
-  constructor(props){
-    super(props) 
-    this.state = { 
+class WelcomePage extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
       input: ''
     }
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnSubmit = this.handleOnSumbit.bind(this)
 
   }
-  
-  handleOnChange(ev){
-    this.setState({input: ev.target.value})
+
+  handleOnChange(ev) {
+    this.setState({ input: ev.target.value })
     console.log(ev.target.value)
   }
 
-  handleOnSumbit(ev){
+  handleOnSumbit(ev) {
     ev.preventDefault()
     this.props.newUser(this.state.input)
-    this.setState({ input: ''})
+    this.setState({ input: '' })
   }
 
-  render(){ 
+  render() {
     return (
-      <div> 
-       <PageHeader> Welcome! What would you like to be called? </PageHeader>   
-          <form onSubmit={this.handleOnSubmit}> 
-            <FormGroup> 
-              <InputGroup value={this.state.input}>
-               <FormControl onChange={this.handleOnChange} />
-               <Button bsStyle="primary" type='submit'> Submit </Button>
-              </InputGroup>
-            </FormGroup>
-          </form>
-        </div> 
-    )  
+      <Col xs={10} xsOffset={1} >
+        <PageHeader>Welcome on chat page! Please choose a room! :-)</PageHeader>
+        <RoomsContainer />
+        {/*<form onSubmit={this.handleOnSubmit}>
+          <FormGroup>
+            <InputGroup value={this.state.input}>
+              <FormControl onChange={this.handleOnChange} />
+              <Button bsStyle="primary" type='submit'> Submit </Button>
+            </InputGroup>
+          </FormGroup>
+        </form>*/}
+      </Col>
+    )
   }
 }
 
-function mapStateToProps(state, ownProps){
-  return { user: state.user }
-}
+// function mapStateToProps(state, ownProps) {
+//   return { user: state.user }
+// }
 
-function mapDispatchToProps(dispatch){
- return { 
-   newUser: (user) => {
-    dispatch(userActions.newUser(user))
-  }
- }
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     newUser: (user) => {
+//       dispatch(userActions.newUser(user))
+//     }
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WelcomePage);
+export default WelcomePage;

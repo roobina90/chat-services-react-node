@@ -6,24 +6,25 @@ import { connect } from 'react-redux'
 class App extends React.Component {
   constructor(props){
     super(props)
-    this.currentUser = this.currentUser.bind(this)
+   // debugger;
+    //this.currentUser = this.currentUser.bind(this)
 
   }
   
-  currentUser(){
-   return !!this.props.user 
-  }
+  // currentUser(){
+  //  return !!this.props.user 
+  // }
   render() {
     return (
       <div>
-        {this.currentUser() ? <ChatContainer /> : <WelcomePage />}
+       <WelcomePage />
       </div> 
     )
   }
 }
 
 function mapStateToProps(state){
- return { user: state.user }  
+ return { user: "Kasia_Kowalska" }  
 }
 
 export default connect(mapStateToProps)(App)

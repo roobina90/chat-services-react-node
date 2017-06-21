@@ -5,8 +5,8 @@ export function joinRoom(roomData) {
   return { type: 'JOIN_ROOM', payload} 
 }
 
-export function newRoom(room) {
-  const newRoom = { title: room, messages: [{user: 'Chat Bot', content: 'Be Kind'}]}
+export function newRoom(room_title) {
+  const newRoom = { title: room_title, messages: [{user: 'Bot', content: 'Hello!'}]}
   return (dispatch) => {
     return messageApi.createRoom(newRoom)
       .then((response) => {
@@ -22,8 +22,8 @@ export function newRoomSuccess(payload){
 export function updateRoomList(payload){
   return { type: 'UPDATE_ROOM_LIST', payload}
 }
-export function fetchRoomData(){
-  console.log('in fetch room')
+export function fetchRoomData() {
+  console.log('getting selected room data')
   return (dispatch) => {
     return messageApi.fetchRoom()
       .then((response) => {

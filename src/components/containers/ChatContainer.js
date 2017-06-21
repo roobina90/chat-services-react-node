@@ -32,7 +32,7 @@ class ChatContainer extends Component {
   }
 
   componentDidMount(){
-    console.log('did mount')
+    //console.log('did mount')
     this._handleFileUpload()
     this._handleMessageEvent()  
   }

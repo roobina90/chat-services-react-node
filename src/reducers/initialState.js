@@ -1,29 +1,17 @@
 export default {
-  messages: [
-    { user: 'ChatBot',
-      message: 'Welcome to React Chat -- Built using React, Redux, Express, and Socket.io'
-    }, 
-    { user: 'Mac Miller',
-      message: 'I tots agree'
-    },
-    { user: 'Scott Mescudi',
-      message: '!!!!!!!!!!!!!!!! I feel immortal'
-    } 
-  ],
-  
   rooms: [
-    { title: 'Music is Life', 
-     messages: [ { user: 'ChatBot', message: 'Welcome to React Chat -- Built using React, Redux, Express, and Socket.io'}, { user:'Scott Mescudi', message: 'Wait, what are these words?'} ]
-     },
-    { title: 'Come share your feelings',
-     messages: [ {user: 'Scott Mescudi', message: 'Someone explain Sockets to me Please'}, {user: 'Q-Tip', message: 'I have no idea'}] 
-    }
+    // {
+    //   title: 'Jan_Kowalski',
+    //   messages: [{ user: 'Bot', message: 'Hello1' }, { user: 'Jan_Kowalski', message: 'Hello2' }]
+    // },
+    // {
+    //   title: 'Kasia_Kowalska',
+    //   messages: [{ user: 'Bot', message: 'Hello3' }, { user: 'Kasia_Kowalska', message: 'Hello4' }]
+    // }
   ],
 
   activeRoom: {
-    title: 'Music is Life',
-    messages: [ { user: 'ChatBot', message: 'Welcome to React Chat -- Built using React, Redux, Express, and Socket.io'}, { user: 'Scott Mescudi', message: 'Wait, what are these words?'}]
-
+    // title: 'Jan_Kowalski',
+    // messages: [{ user: 'Bot', message: 'Hello1' }, { user: 'Jan_Kowalski', message: 'Hello2' }]
   }
-
 }

@@ -22,6 +22,7 @@ class RoomsContainer extends Component {
     this.fetchRooms()
   } 
 
+
   handleOnClick(room){
     socket.emit("unsubscribe") 
     socket.emit("subscribe", { room: room.title})
@@ -30,6 +31,7 @@ class RoomsContainer extends Component {
 
   handleNewRoom(ev) {
     ev.preventDefault()
+    //socket.emit('new room', {message: this.state.input, room: this.props.room.title, user: this.props.user})
     this.props.newRoom(this.state.input)
     this.setState({input: ''})
   }

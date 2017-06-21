@@ -2,8 +2,10 @@ import initialState from './initialState'
 
 export default function roomReducer(state = initialState.rooms, action) {
   switch(action.type) {
-    case 'NEW_ROOM':
+    case 'NEW_ROOM': {
+      debugger;
       return [...state, action.payload]
+    }
     case 'UPDATE_ROOM_LIST':
       if(action.payload.data.length < 1){
         action.payload.data = false

@@ -39,6 +39,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(serveStatic(staticPath))
 
 app.get('/messages', (req, res) => {
+  console.log("in get /messages")
   Message.find({room: room}, (err, docs) => {
     res.json(docs) 
   })
@@ -46,7 +47,7 @@ app.get('/messages', (req, res) => {
 })  
 
 app.get('/rooms', (req, res) => {
-  console.log('in fetch rooms')
+  console.log('in get /rooms')
   Room.find({}, (err, docs) => {
     console.log('docs', docs)
     res.json(docs)
@@ -109,31 +110,31 @@ io.on('connection', function(socket) {
     
   })
 
-  socket.on('file_upload', (data, buffer) => {
-    console.log(data)
-    const user = data.user
-    const fileName = path.join(__dirname, '../public/images', data.file)
-    const tmpFileName = path.join('/images', data.file)
-    const imageBuffer = imageDecoder(buffer)      
+  // socket.on('file_upload', (data, buffer) => {
+  //   console.log(data)
+  //   const user = data.user
+  //   const fileName = path.join(__dirname, '../public/images', data.file)
+  //   const tmpFileName = path.join('/images', data.file)
+  //   const imageBuffer = imageDecoder(buffer)      
 
-    fs.open(fileName, 'a+', (err, fd) => {
-      if (err) throw err;
+  //   fs.open(fileName, 'a+', (err, fd) => {
+  //     if (err) throw err;
 
-      fs.writeFile(fileName, imageBuffer.data, {encoding: 'base64'}, (err) => { 
-        fs.close(fd, () => {
-          let message = Message({user: user, room: room, image: tmpFileName})
+  //     fs.writeFile(fileName, imageBuffer.data, {encoding: 'base64'}, (err) => { 
+  //       fs.close(fd, () => {
+  //         let message = Message({user: user, room: room, image: tmpFileName})
           
-          message.save((err) => {
-            if (err) return err
-          }) 
-          console.log('file saved successfully!')
-        });
-      })
-    })
+  //         message.save((err) => {
+  //           if (err) return err
+  //         }) 
+  //         console.log('file saved successfully!')
+  //       });
+  //     })
+  //   })
 
-    console.log('reached room, sending', fileName)
-    io.to(room).emit('file_upload_success', {file: tmpFileName, user: user})
-  })
+  //   console.log('reached room, sending', fileName)
+  //   io.to(room).emit('file_upload_success', {file: tmpFileName, user: user})
+  // })
 });
 
 mongoose.connect('mongodb://localhost')

@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
-import messages from './messagesReducer'
+//import messages from './messagesReducer'
 import rooms from './roomsReducer'
 import activeRoom from './activeRoomReducer' 
-import user from './usersReducer'
+//import user from './usersReducer'
 
 const rootReducer = combineReducers({
-  messages,
+  //messages,
   rooms,
-  activeRoom,
-  user
+  activeRoom//,
+ // user
 })
 
 export default rootReducer
