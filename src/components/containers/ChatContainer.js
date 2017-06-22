@@ -39,15 +39,14 @@ class ChatContainer extends Component {
   } 
 
   handleOnSubmit(ev) {
-    
     ev.preventDefault()
-    socket.emit('chat message', {message: this.state.input, room: this.props.room.title, user: "Bot"})
+    socket.emit('chat message', {message: this.state.input, room: this.props.params.room, user: "Bot"})
     this.setState({ input: '' })
   }
 
   _handleMessageEvent(){
     socket.on('chat message', (inboundMessage) => {
-       this.props.createMessage({room: this.props.room, newMessage: {user: "Bot", message: JSON.parse(inboundMessage).message}}) 
+       this.props.createMessage({room: this.props.activeRoom, newMessage: {user: "Bot", message: JSON.parse(inboundMessage).message}}) 
        console.log('received message', inboundMessage)
      })
   }
