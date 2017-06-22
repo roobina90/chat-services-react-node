@@ -31,10 +31,10 @@ class WelcomePage extends Component {
   render() {
     return (
       <Col xs={10} xsOffset={1} >
-        <PageHeader>Welcome on chat page! Please choose a room! :-)</PageHeader>
+        {/*<PageHeader>Welcome on chat page! Please choose a room! :-)</PageHeader>
         <RoomsContainer />
        {this.props.activeRoom != null && <ChatContainer />} 
-        {/*<form onSubmit={this.handleOnSubmit}>
+        <form onSubmit={this.handleOnSubmit}>
           <FormGroup>
             <InputGroup value={this.state.input}>
               <FormControl onChange={this.handleOnChange} />

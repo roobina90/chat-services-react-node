@@ -11,11 +11,10 @@ import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormC
 class ChatContainer extends Component { 
   constructor(props) {
     super(props)
-    
      this.state = { 
        input : '',
-       imagePreviewUrl: '',
-       messages: props.messages,
+       //imagePreviewUrl: '',
+       messages: [],
        connected: false
      }
 
@@ -31,7 +30,7 @@ class ChatContainer extends Component {
   }
 
   componentDidMount(){
-    //console.log('did mount')
+    console.log('chat container did mount')
     this._handleMessageEvent()  
   }
 
@@ -53,11 +52,15 @@ class ChatContainer extends Component {
      })
   }
   
+
+
   _init(){
     if(!(this.state.connected)){ 
-      console.log("Elo elo jestem w initi w chat container")
-      this.props.fetchRoom()
-      socket.emit('subscribe', {room: this.props.room.title})
+      console.log("i am before fetch Room")
+      this.props.fetchRoom(this.props.params.room).then((response) => {
+       this.setState({messages: response})
+      })
+      socket.emit('subscribe', {room: this.props.params.room})
         this.setState({connected: true})
     }
   }
@@ -65,7 +68,7 @@ class ChatContainer extends Component {
   render() {
     return (
       <div>
-      Hello in room {this.props.room.title} bastards!
+      Hello in room {this.props.params.room} bastards!
       <form>
           <FormGroup>
             <InputGroup>
@@ -79,7 +82,7 @@ class ChatContainer extends Component {
           </InputGroup>
         </FormGroup>
         </form>
-        {<ChatLog messages={this.props.messages}/>}
+        <ChatLog messages={this.props.activeRoom.messages}/>
         
    </div>
     )
@@ -88,7 +91,7 @@ class ChatContainer extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return { messages: state.activeRoom.messages, room: state.activeRoom }
+  return { activeRoom: state.activeRoom}
 }
 
 function mapDispatchToProps(dispatch) {

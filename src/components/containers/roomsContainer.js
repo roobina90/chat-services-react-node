@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { ListGroup, ListGroupItem, Col } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, Col, PageHeader } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import * as roomActions from '../../actions/roomActions'
 import { bindActionCreators } from 'redux'
 import NewRoom from '../newRoom' 
+import { Link, browserHistory  } from 'react-router'
 
 class RoomsContainer extends Component { 
   constructor(props){
@@ -24,9 +25,10 @@ class RoomsContainer extends Component {
 
 
   handleOnClick(room){
-    socket.emit("unsubscribe") 
-    socket.emit("subscribe", { room: room.title})
-    this.props.joinRoom(room)   
+    //socket.emit("unsubscribe") 
+    //socket.emit("subscribe", { room: room.title})
+    //this.props.joinRoom(room)   
+    //browserHistory.push(`/abc/${room.title}`)
   }  
 
   handleNewRoom(ev) {
@@ -50,15 +52,16 @@ class RoomsContainer extends Component {
   render() {
     const rooms = this.props.rooms.map((room) => { 
       return ( 
-        <ListGroupItem key={room.title} onClick={this.handleOnClick.bind(null, room)}>
-          {room.title}
+        <ListGroupItem key={room.title} >
+         <Link to={room.title}>{room.title}</Link>
         </ListGroupItem> 
       )
     })
 
     return (
       <div>
-        <Col xs={4} mdPull={1}> 
+        <PageHeader>Welcome on chat page! Please choose a client! :-)</PageHeader>
+        <Col xs={10} xsOffset={1}> 
           <ListGroup>
             {rooms}
             <NewRoom handleOnChange={this.handleOnChange} handleNewRoom={this.handleNewRoom} value={this.state.input}/>
