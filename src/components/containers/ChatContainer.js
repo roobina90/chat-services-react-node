@@ -5,7 +5,7 @@ import * as roomActions from '../../actions/roomActions'
 import { bindActionCreators } from 'redux'
 import ChatLog from '../chatLog'
 import FileUploader from '../fileUpload'
-import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
+import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl, Grid , Checkbox} from 'react-bootstrap'
 
 
 class ChatContainer extends Component { 
@@ -15,13 +15,16 @@ class ChatContainer extends Component {
        input : '',
        //imagePreviewUrl: '',
        messages: [],
-       connected: false
+       connected: false,
+       checkbox: false
      }
 
      this.handleOnChange = this.handleOnChange.bind(this)
      this.handleOnSubmit = this.handleOnSubmit.bind(this)
      this._handleMessageEvent = this._handleMessageEvent.bind(this)
      this._init = this._init.bind(this)
+     this.onCheckboxChange = this.onCheckboxChange.bind(this)
+     this._handleMessageEvent = this._handleMessageEvent.bind(this)
    }  
 
 
@@ -31,10 +34,12 @@ class ChatContainer extends Component {
 
   componentDidMount(){
     console.log('chat container did mount')
-    this._handleMessageEvent()  
+    this._handleMessageEvent();
+    this.handleCheckboxChange();
   }
 
   handleOnChange(ev) {
+      console.log(ev);
     this.setState({ input: ev.target.value}) 
   } 
 
@@ -50,10 +55,19 @@ class ChatContainer extends Component {
        console.log('received message', inboundMessage)
      })
   }
-  
+  onCheckboxChange(ev) {
+      console.log("bla");
+      //this.setState({ checkbox: !this.state.checkbox });
+      socket.emit('checkbox', { checkboxState: this.state.checkbox });
 
+  }
+   handleCheckboxChange() {
+        socket.on('checkbox', (ev) => {
+            console.log(ev);
+        });
+    }
 
-  _init(){
+    _init(){
     if(!(this.state.connected)){ 
       console.log("i am before fetch Room")
       this.props.fetchRoom(this.props.params.room).then((response) => {
@@ -64,9 +78,9 @@ class ChatContainer extends Component {
     }
   }
 
-  render() {
+    render() {
     return (
-      <div>
+      <Grid>
       Hello in room {this.props.params.room} bastards!
       <form>
           <FormGroup>
@@ -81,9 +95,12 @@ class ChatContainer extends Component {
           </InputGroup>
         </FormGroup>
         </form>
+
+        <Checkbox onChange={this.onCheckboxChange} bsSize="lg" />
+                
         <ChatLog messages={this.props.activeRoom.messages}/>
         
-   </div>
+   </Grid>
     )
   }
 
