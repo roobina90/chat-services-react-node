@@ -40,7 +40,7 @@ class ServicesContainer extends Component {
  handleNewService(ev) {
     ev.preventDefault()
     debugger;
-    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false})
+    socket.emit('new service', {name: this.state.input, price: 99, isChosen: true})
     this.setState({input: ''})
   }
 

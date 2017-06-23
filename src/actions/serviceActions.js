@@ -7,7 +7,7 @@ export function joinRoom(roomData) {
 
 export function newService(service) {
   console.log("adding new service", service)
-  const newService = { name: service, price: 99, isChosen: false}
+  const newService = { name: service, price: 99, isChosen: true}
   return (dispatch) => {
     return messageApi.createService(newService)
       .then((response) => {
