@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ListGroup, ListGroupItem, Col, PageHeader } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, Col, PageHeader, Glyphicon } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import * as serviceActions from '../../actions/serviceActions'
 import { bindActionCreators } from 'redux'
@@ -19,6 +19,7 @@ class ServicesContainer extends Component {
     this.handleNewService = this.handleNewService.bind(this)
     this.handleOnChange = this.handleOnChange.bind(this)
     this._handleServiceEvent = this._handleServiceEvent.bind(this)
+    this._handleChooseServiceEvent = this._handleChooseServiceEvent.bind(this)
      this._init = this._init.bind(this)
   }
 
@@ -29,6 +30,7 @@ class ServicesContainer extends Component {
   componentDidMount() {
     console.log("component services container did mount")
     this._handleServiceEvent();
+    this._handleChooseServiceEvent();
   }
 
   handleOnChange(ev) {
@@ -52,6 +54,17 @@ class ServicesContainer extends Component {
      })
   }
 
+  _handleChooseServiceEvent(){
+    //ev.preventDefault()
+    socket.on('choose service', (incomingService) => {
+      debugger;
+      //this.props.newService(this.state.input)
+      //todo: przyjrzec sie co robi createService
+       this.props.chooseService(JSON.parse(incomingService)) 
+       //console.log('received service', incomingService)
+     })
+  }
+
 
   _init() {
     if(!(this.state.connected)){ 
@@ -65,11 +78,9 @@ class ServicesContainer extends Component {
     }
 }
 
-  handleOnClick(room){
-    //socket.emit("unsubscribe") 
-    //socket.emit("subscribe", { room: room.title})
-    //this.props.joinRoom(room)   
-    //browserHistory.push(`/abc/${room.title}`)
+  handleOnClick(service){
+    debugger
+    socket.emit("choose service", service )
   }  
 
  
@@ -81,16 +92,12 @@ class ServicesContainer extends Component {
   //   }
   // }
 
-  handleChooseUsluga(usluga) {
-    socket.emit()
-  }
-
   render() {
     const services = this.props.services.map((service, i) => { 
       debugger;
       return ( 
-        <ListGroupItem key={i} >
-        {service.name} -- {service.price} $$
+        <ListGroupItem key={i} onClick={this.handleOnClick.bind(null, service)} >
+        {service.name} -- {service.price} $$ {service.isChosen && <Glyphicon glyph="star" />}
         </ListGroupItem> 
       )
     })
@@ -113,7 +120,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ toggleService: serviceActions.fetchServiceData, createService: serviceActions.saveService, newService: serviceActions.newService, fetchServicesList: serviceActions.fetchServicesList}, dispatch)
+  return bindActionCreators({ toggleService: serviceActions.fetchServiceData,  chooseService: serviceActions.chooseService, createService: serviceActions.saveService, newService: serviceActions.newService, fetchServicesList: serviceActions.fetchServicesList}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServicesContainer)

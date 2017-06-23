@@ -12,7 +12,7 @@ export default function serviceReducer(state = initialState.services, action) {
       }
       return action.payload.data || state  
      }
-    case 'TOGGLE_CHOOSE_SERVICE'://will get service name
+    case 'CHOOSE_SERVICE'://will get service name
       return state.map((service) => {
         if(action.payload === service.name) {
           service.isChosen = !service.isChosen

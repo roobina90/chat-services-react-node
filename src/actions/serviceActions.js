@@ -49,6 +49,10 @@ console.log("get service list")
 
 
 export function saveService(payload) {
-
   return { type: 'NEW_SERVICE', payload }
+}
+
+
+export function chooseService(payload) {
+  return { type: 'CHOOSE_SERVICE', payload }
 }
