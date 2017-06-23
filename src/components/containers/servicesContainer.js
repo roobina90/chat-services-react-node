@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { ListGroup, ListGroupItem, Col, PageHeader } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import * as roomActions from '../../actions/roomActions'
+import * as serviceActions from '../../actions/serviceActions'
 import { bindActionCreators } from 'redux'
-import NewRoom from '../newRoom' 
-import ServicesContainer from './servicesContainer' 
+import NewService from '../newService' 
 import { Link, browserHistory  } from 'react-router'
 
 class RoomsContainer extends Component { 
@@ -15,13 +14,13 @@ class RoomsContainer extends Component {
       connected: false
     }
     this.handleOnClick = this.handleOnClick.bind(this)
-    this.handleNewRoom = this.handleNewRoom.bind(this)
+    this.handleNewService = this.handleNewService.bind(this)
     this.handleOnChange = this.handleOnChange.bind(this)
-    this.fetchRooms = this.fetchRooms.bind(this)
+    this.fetchServices = this.fetchServices.bind(this)
   }
 
   componentDidMount(){
-    this.fetchRooms()
+    this.fetchServices()
   } 
 
 
@@ -32,10 +31,10 @@ class RoomsContainer extends Component {
     //browserHistory.push(`/abc/${room.title}`)
   }  
 
-  handleNewRoom(ev) {
+  handleNewService(ev) {
     ev.preventDefault()
-    //socket.emit('new room', {message: this.state.input, room: this.props.room.title, user: this.props.user})
-    this.props.newRoom(this.state.input)
+    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false})
+    this.props.newService(this.state.input)
     this.setState({input: ''})
   }
   
@@ -43,9 +42,9 @@ class RoomsContainer extends Component {
     this.setState({input: ev.target.value})
   }
 
-  fetchRooms(){
+  fetchServices(){
     if (!this.state.connected) { 
-      this.props.fetchRoomList()
+      this.props.fetchServicesList()
       this.state.connected = true
     }
   }
@@ -55,37 +54,33 @@ class RoomsContainer extends Component {
   }
 
   render() {
-    const rooms = this.props.rooms.map((room) => { 
+    const services = this.props.services.map((service) => { 
       return ( 
-        <ListGroupItem key={room.title} >
-         <Link to={room.title}>{room.title}</Link>
+        <ListGroupItem key={service.name} >
+        {service.name} -- {service.price} $$
         </ListGroupItem> 
       )
     })
 
     return (
       <div>
-        <PageHeader>Welcome on chat page! Please choose a client! :-)</PageHeader>
-        <ServicesContainer />
         <Col xs={10} xsOffset={1}> 
           <ListGroup>
-            {rooms}
-            <NewRoom handleOnChange={this.handleOnChange} handleNewRoom={this.handleNewRoom} value={this.state.input}/>
+            {services}
+            <NewService handleOnChange={this.handleOnChange} handleNewService={this.handleNewService} value={this.state.input}/>
           </ListGroup>
         </Col>
       </div>
     )
-
   }
-
 }
 
 function mapStateToProps(state, ownProps) {
- return { rooms: state.rooms }
+ return { services: state.services }
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ joinRoom: roomActions.fetchRoomData, newRoom: roomActions.newRoom, fetchRoomList: roomActions.fetchRoomList}, dispatch)
+  return bindActionCreators({ toggleService: serviceActions.fetchServiceData, newService: serviceActions.newService, fetchServicesList: serviceActions.fetchServicesList}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomsContainer)

@@ -10,6 +10,8 @@ export default {
     // }
   ],
 
+  services: [],
+
   activeRoom: {
     title: '',
     messages: []

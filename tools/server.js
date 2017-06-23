@@ -11,9 +11,10 @@ import fs from 'fs'
 import mongoose from 'mongoose'
 import Message from '../db/messageSchema'
 import Room from '../db/roomSchema'
+import Service from '../db/serviceSchema'
 import { Binary } from 'mongodb'
 import serveStatic from 'serve-static'
-import imageDecoder from './imageDecoder'
+//import imageDecoder from './imageDecoder'
 // import Image from '../db/imageSchema'
 /* eslint-disable no-console */
 
@@ -54,6 +55,26 @@ app.get('/rooms', (req, res) => {
   })
 })
 
+app.get('/services', (req, res) => {
+  console.log('in get /services')
+  Service.find({}, (err, docs) => {
+    console.log('docs', docs)
+    res.json(docs)
+  })
+})
+
+
+app.post('/services', (req, res) => {
+  let service = new Service({name: req.body.name, price: 99, isChosen: false})
+
+  service.save((err) => {
+    if (err) return err
+  })
+
+  res.json(service)
+})
+
+
 app.post('/rooms', (req, res) => {
   let message = new Message({user: req.body.messages[0].user, content: req.body.messages[0].content, room: req.body.title})
   console.log('message', message)
@@ -69,6 +90,8 @@ app.post('/rooms', (req, res) => {
 
   res.json(message)
 })
+
+
 
 app.get('/', function(req, res) {
   console.log('get route caught this')
@@ -105,6 +128,13 @@ io.on('connection', function(socket) {
   socket.on('new room', (roomData) => {
     let message = new Message({user: roomData.user, content: roomData.message, room: roomData.room})
     message.save((err) => {
+      if (err) return err
+    })
+    
+  })
+    socket.on('new service', (serviceData) => {
+    let service = new Service({name: serviceData.name, price: serviceData.message, isChosen: serviceData.room})
+    service.save((err) => {
       if (err) return err
     })
     

@@ -14,9 +14,19 @@ class MessageApi {
    return axios.post('/rooms', roomData) 
  }
 
+  static createService(serviceData){
+   return axios.post('/services', serviceData) 
+ }
+
  static fetchRoomList(){
   return axios.get('/rooms')
  }
+
+  static fetchServiceList(){
+  return axios.get('/services')
+ }
 }
+
+
 
 export default MessageApi

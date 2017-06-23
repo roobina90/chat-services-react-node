@@ -18,7 +18,6 @@ export default function activeRoomReducer(state = initialState.activeRoom, actio
     }
      
     case 'NEW_MESSAGE': {
-      debugger;
 return Object.assign({}, action.payload.room, { 
         messages: [...action.payload.room.messages, action.payload.newMessage]
       }) 
