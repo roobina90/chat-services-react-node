@@ -133,10 +133,12 @@ io.on('connection', function(socket) {
     
   })
     socket.on('new service', (serviceData) => {
-    let service = new Service({name: serviceData.name, price: serviceData.message, isChosen: serviceData.room})
+    let service = new Service({name: serviceData.name, price: serviceData.price, isChosen: serviceData.isChosen})
     service.save((err) => {
       if (err) return err
     })
+
+     io.emit('new service', JSON.stringify(serviceData))
     
   })
 

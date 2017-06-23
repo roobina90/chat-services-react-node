@@ -3,6 +3,7 @@ import initialState from './initialState'
 export default function serviceReducer(state = initialState.services, action) {
   switch(action.type) {
     case 'NEW_SERVICE': {
+      debugger;
       return [...state, action.payload]
     }
      case 'UPDATE_SERVICE_LIST': {

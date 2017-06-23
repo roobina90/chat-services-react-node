@@ -6,23 +6,64 @@ import { bindActionCreators } from 'redux'
 import NewService from '../newService' 
 import { Link, browserHistory  } from 'react-router'
 
-class RoomsContainer extends Component { 
+class ServicesContainer extends Component { 
   constructor(props){
     super()
     this.state = {
       input: '',
-      connected: false
+      connected: false,
+      services: []
     }
+
     this.handleOnClick = this.handleOnClick.bind(this)
     this.handleNewService = this.handleNewService.bind(this)
     this.handleOnChange = this.handleOnChange.bind(this)
-    this.fetchServices = this.fetchServices.bind(this)
+    this._handleServiceEvent = this._handleServiceEvent.bind(this)
+     this._init = this._init.bind(this)
   }
 
-  componentDidMount(){
-    this.fetchServices()
+  componentWillMount(){
+    this._init()
   } 
 
+  componentDidMount() {
+    console.log("component services container did mount")
+    this._handleServiceEvent();
+  }
+
+  handleOnChange(ev) {
+    this.setState({input: ev.target.value})
+  }
+
+ handleNewService(ev) {
+    ev.preventDefault()
+    debugger;
+    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false})
+    this.setState({input: ''})
+  }
+
+ _handleServiceEvent(){
+    //ev.preventDefault()
+    socket.on('new service', (incomingService) => {
+      //this.props.newService(this.state.input)
+      //todo: przyjrzec sie co robi createService
+       this.props.createService(JSON.parse(incomingService)) 
+       console.log('received service', incomingService)
+     })
+  }
+
+
+  _init() {
+    if(!(this.state.connected)){ 
+      console.log("i am before fetch services")
+      //todo: przyjrzec się fetchServices
+      this.props.fetchServicesList().then((response) => {
+       this.setState({services: response})
+      })
+     // socket.emit('subscribe', {room: this.props.params.room})
+        this.setState({connected: true})
+    }
+}
 
   handleOnClick(room){
     //socket.emit("unsubscribe") 
@@ -31,32 +72,24 @@ class RoomsContainer extends Component {
     //browserHistory.push(`/abc/${room.title}`)
   }  
 
-  handleNewService(ev) {
-    ev.preventDefault()
-    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false})
-    this.props.newService(this.state.input)
-    this.setState({input: ''})
-  }
-  
-  handleOnChange(ev) {
-    this.setState({input: ev.target.value})
-  }
+ 
 
-  fetchServices(){
-    if (!this.state.connected) { 
-      this.props.fetchServicesList()
-      this.state.connected = true
-    }
-  }
+  // fetchServices(){
+  //   if (!this.state.connected) { 
+  //     this.props.fetchServicesList()
+  //     this.state.connected = true
+  //   }
+  // }
 
   handleChooseUsluga(usluga) {
     socket.emit()
   }
 
   render() {
-    const services = this.props.services.map((service) => { 
+    const services = this.props.services.map((service, i) => { 
+      debugger;
       return ( 
-        <ListGroupItem key={service.name} >
+        <ListGroupItem key={i} >
         {service.name} -- {service.price} $$
         </ListGroupItem> 
       )
@@ -80,7 +113,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ toggleService: serviceActions.fetchServiceData, newService: serviceActions.newService, fetchServicesList: serviceActions.fetchServicesList}, dispatch)
+  return bindActionCreators({ toggleService: serviceActions.fetchServiceData, createService: serviceActions.saveService, newService: serviceActions.newService, fetchServicesList: serviceActions.fetchServicesList}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ServicesContainer)
