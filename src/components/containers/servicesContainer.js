@@ -39,14 +39,15 @@ class ServicesContainer extends Component {
 
  handleNewService(ev) {
     ev.preventDefault()
-    //debugger;
-    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false})
+    debugger
+    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false, room: this.props.room })
     this.setState({input: ''})
   }
 
  _handleServiceEvent(){
     //ev.preventDefault()
     socket.on('new service', (incomingService) => {
+      debugger
       //this.props.newService(this.state.input)
       //todo: przyjrzec sie co robi createService
        this.props.createService(JSON.parse(incomingService)) 

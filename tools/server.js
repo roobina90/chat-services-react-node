@@ -57,7 +57,7 @@ app.get('/rooms', (req, res) => {
 
 app.get('/services', (req, res) => {
   console.log('in get /services')
-  Service.find({}, (err, docs) => {
+  Service.find({room: room}, (err, docs) => {
     console.log('docs', docs)
     res.json(docs)
   })
@@ -65,7 +65,7 @@ app.get('/services', (req, res) => {
 
 
 app.post('/services', (req, res) => {
-  let service = new Service({name: req.body.name, price: req.body.price, isChosen: req.body.isChosen})
+  let service = new Service({name: req.body.name, price: req.body.price, isChosen: req.body.isChosen, room: req.body.room})
 
   service.save((err) => {
     if (err) return err
@@ -133,7 +133,7 @@ io.on('connection', function(socket) {
     
   })
     socket.on('new service', (serviceData) => {
-    let service = new Service({name: serviceData.name, price: serviceData.price, isChosen: serviceData.isChosen})
+    let service = new Service({name: serviceData.name, price: serviceData.price, isChosen: serviceData.isChosen, room: serviceData.room})
     service.save((err) => {
       if (err) return err
     })
@@ -143,9 +143,9 @@ io.on('connection', function(socket) {
   })
 
   socket.on('choose service', (service) => {
-    console.log("zmieniam serwissssssssssssss", service.name)
-    console.log("zmieniam serwissssssssssssss", service.isChosen)
-    Service.update({name: service.name}, {$set: { isChosen: !service.isChosen }}, {}, function(err){
+    //console.log("zmieniam serwissssssssssssss", service.name)
+    //console.log("zmieniam serwissssssssssssss", service.isChosen)
+    Service.update({name: service.name, room: service.room}, {$set: { isChosen: !service.isChosen }}, {}, function(err){
       //console.error(err)
       return err
     })

@@ -4,6 +4,7 @@ import * as messageActions from '../../actions/messagesActions'
 import * as roomActions from '../../actions/roomActions'
 import { bindActionCreators } from 'redux'
 import ChatLog from '../chatLog'
+import ServicesContainer from './servicesContainer' 
 import FileUploader from '../fileUpload'
 import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl, Grid , Checkbox} from 'react-bootstrap'
 
@@ -82,6 +83,7 @@ class ChatContainer extends Component {
     return (
       <Grid>
       Hello in room {this.props.params.room} bastards!
+      <ServicesContainer room={this.props.params.room} />
       <form>
           <FormGroup>
             <InputGroup>

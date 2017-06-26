@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import * as roomActions from '../../actions/roomActions'
 import { bindActionCreators } from 'redux'
 import NewRoom from '../newRoom' 
-import ServicesContainer from './servicesContainer' 
 import { Link, browserHistory  } from 'react-router'
 
 class RoomsContainer extends Component { 
@@ -66,7 +65,7 @@ class RoomsContainer extends Component {
     return (
       <div>
         <PageHeader>Welcome on chat page! Please choose a client! :-)</PageHeader>
-        <ServicesContainer />
+
         <Col xs={10} xsOffset={1}> 
           <ListGroup>
             {rooms}

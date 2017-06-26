@@ -18,7 +18,8 @@ export default function serviceReducer(state = initialState.services, action) {
           var newService = {
             name: service.name,
             price: service.price,
-            isChosen: !service.isChosen
+            isChosen: !service.isChosen,
+            room: service.room
           };
           return newService
         }
