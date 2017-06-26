@@ -14,7 +14,7 @@ export default function serviceReducer(state = initialState.services, action) {
     }
     case 'CHOOSE_SERVICE'://will get service name
       return state.map((service) => {
-        if (action.payload === service.name) {
+        if (action.payload.name === service.name && action.payload.room === service.room) {
           var newService = {
             name: service.name,
             price: service.price,

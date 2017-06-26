@@ -12,7 +12,7 @@ class ServicesContainer extends Component {
     this.state = {
       input: '',
       connected: false,
-      services: []
+      services: props.room.services
     }
 
     this.handleOnClick = this.handleOnClick.bind(this)
@@ -40,7 +40,7 @@ class ServicesContainer extends Component {
  handleNewService(ev) {
     ev.preventDefault()
     debugger
-    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false, room: this.props.room })
+    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false, room: this.props.room.title })
     this.setState({input: ''})
   }
 
@@ -62,7 +62,7 @@ class ServicesContainer extends Component {
       //this.props.newService(this.state.input)
       //todo: przyjrzec sie co robi createService
       debugger
-       this.props.chooseService(JSON.parse(incomingService).name) 
+       this.props.chooseService(JSON.parse(incomingService)) 
        //console.log('received service', incomingService)
      })
   }
@@ -97,7 +97,7 @@ class ServicesContainer extends Component {
   // }
 
   render() {
-    const services = this.props.services.map((service, i) => { 
+    const services = this.props.room.services.map((service, i) => { 
       //debugger;
       return ( 
         <ListGroupItem key={i} onClick={this.handleOnClick.bind(null, service)} >
@@ -120,7 +120,7 @@ class ServicesContainer extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
- return { services: state.services }
+ return {room: state.activeRoom}
 }
 
 function mapDispatchToProps(dispatch) { 

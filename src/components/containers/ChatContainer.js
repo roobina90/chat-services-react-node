@@ -83,7 +83,7 @@ class ChatContainer extends Component {
     return (
       <Grid>
       Hello in room {this.props.params.room} bastards!
-      <ServicesContainer room={this.props.params.room} />
+      <ServicesContainer />
       <form>
           <FormGroup>
             <InputGroup>
@@ -109,7 +109,7 @@ class ChatContainer extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return { activeRoom: state.activeRoom}
+  return { activeRoom: state.activeRoom }
 }
 
 function mapDispatchToProps(dispatch) {

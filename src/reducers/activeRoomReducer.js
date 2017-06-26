@@ -5,6 +5,7 @@ export default function activeRoomReducer(state = initialState.activeRoom, actio
     case 'JOIN_ROOM': {
       return {
         title: action.payload[0].room,
+        services: action.payload.services,
         messages: action.payload.map((msg) => {
           return {
             user: msg.user,
@@ -19,7 +20,8 @@ export default function activeRoomReducer(state = initialState.activeRoom, actio
      
     case 'NEW_MESSAGE': {
 return Object.assign({}, action.payload.room, { 
-        messages: [...action.payload.room.messages, action.payload.newMessage]
+        messages: [...action.payload.room.messages, action.payload.newMessage],
+        services: [...action.payload.room.services]
       }) 
     }
       

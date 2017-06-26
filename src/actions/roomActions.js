@@ -1,6 +1,7 @@
 import messageApi from '../api/messageApi';
 
 export function joinRoom(roomData) { 
+  debugger
   const payload = roomData.data
   return { type: 'JOIN_ROOM', payload} 
 }

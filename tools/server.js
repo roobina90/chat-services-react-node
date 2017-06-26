@@ -57,8 +57,8 @@ app.get('/rooms', (req, res) => {
 
 app.get('/services', (req, res) => {
   console.log('in get /services')
-  Service.find({room: room}, (err, docs) => {
-    console.log('docs', docs)
+  Room.find({room: room}, (err, docs) => {
+    console.log('services: ------------------------------ ', docs)
     res.json(docs)
   })
 })
