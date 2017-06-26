@@ -39,8 +39,8 @@ class ServicesContainer extends Component {
 
  handleNewService(ev) {
     ev.preventDefault()
-    debugger;
-    socket.emit('new service', {name: this.state.input, price: 99, isChosen: true})
+    //debugger;
+    socket.emit('new service', {name: this.state.input, price: 99, isChosen: false})
     this.setState({input: ''})
   }
 
@@ -57,10 +57,11 @@ class ServicesContainer extends Component {
   _handleChooseServiceEvent(){
     //ev.preventDefault()
     socket.on('choose service', (incomingService) => {
-      debugger;
+      //debugger;
       //this.props.newService(this.state.input)
       //todo: przyjrzec sie co robi createService
-       this.props.chooseService(JSON.parse(incomingService)) 
+      debugger
+       this.props.chooseService(JSON.parse(incomingService).name) 
        //console.log('received service', incomingService)
      })
   }
@@ -79,8 +80,10 @@ class ServicesContainer extends Component {
 }
 
   handleOnClick(service){
-    debugger
+    //debugger
+
     socket.emit("choose service", service )
+   // this.props.chooseService(service.name)
   }  
 
  
@@ -94,7 +97,7 @@ class ServicesContainer extends Component {
 
   render() {
     const services = this.props.services.map((service, i) => { 
-      debugger;
+      //debugger;
       return ( 
         <ListGroupItem key={i} onClick={this.handleOnClick.bind(null, service)} >
         {service.name} -- {service.price} $$ {service.isChosen && <Glyphicon glyph="star" />}

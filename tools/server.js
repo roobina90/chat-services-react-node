@@ -65,7 +65,7 @@ app.get('/services', (req, res) => {
 
 
 app.post('/services', (req, res) => {
-  let service = new Service({name: req.body.name, price: req.body.price, isChosen: re.body.isChosen})
+  let service = new Service({name: req.body.name, price: req.body.price, isChosen: req.body.isChosen})
 
   service.save((err) => {
     if (err) return err
@@ -143,12 +143,13 @@ io.on('connection', function(socket) {
   })
 
   socket.on('choose service', (service) => {
-   let service1 = new Service({name: service.name, price: service.price, isChosen: true})
-    service1.save((err) => {
-      if (err) return err
+    console.log("zmieniam serwissssssssssssss", service.name)
+    console.log("zmieniam serwissssssssssssss", service.isChosen)
+    Service.update({name: service.name}, {$set: { isChosen: !service.isChosen }}, {}, function(err){
+      //console.error(err)
+      return err
     })
-
-     io.emit('new service', JSON.stringify(service))
+     io.emit('choose service', JSON.stringify(service))
     
   })
 
