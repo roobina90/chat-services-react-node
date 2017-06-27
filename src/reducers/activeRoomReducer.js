@@ -21,10 +21,26 @@ export default function activeRoomReducer(state = initialState.activeRoom, actio
     }
     case 'NEW_SERVICE': {
       debugger
-      return Object.assign({}, state , {
+      return Object.assign({}, state, {
         services: [...state.services, action.payload]
       })
     }
+    case 'CHOOSE_SERVICE'://will get service name
+
+      return Object.assign({}, state, {
+        services: state.services.map((service) => {
+          if (action.payload.name === service.name && action.payload.room === service.room) {
+            var newService = {
+              name: service.name,
+              price: service.price,
+              isChosen: !service.isChosen,
+              room: service.room
+            };
+            return newService
+          }
+          return service
+        })
+      })
     case 'NEW_MESSAGE': {
       //debugger;
       return Object.assign({}, action.payload.room, {

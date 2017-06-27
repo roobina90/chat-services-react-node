@@ -80,6 +80,7 @@ class ChatContainer extends Component {
   }
 
     render() {
+      debugger
     return (
       <Grid>
       Hello in room {this.props.params.room} bastards!
