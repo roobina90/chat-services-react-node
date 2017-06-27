@@ -6,8 +6,14 @@ class MessageApi {
      return axios.post('/messages', parsed)
   }
 
-  static fetchRoom(){
-    return axios.get('/messages')
+  static fetchRoom() {
+    debugger
+    return axios.all([axios.get('/messages'), axios.get("/services")])
+  }
+
+
+  static fetchRoomServices(){
+    return axios.get('/services')
   }
 
  static createRoom(roomData){

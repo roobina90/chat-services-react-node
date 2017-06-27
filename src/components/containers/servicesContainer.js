@@ -72,9 +72,14 @@ class ServicesContainer extends Component {
     if(!(this.state.connected)){ 
       console.log("i am before fetch services")
       //todo: przyjrzec się fetchServices
-      this.props.fetchServicesList().then((response) => {
+      // this.props.fetchServicesList().then((response) => {
+      //  this.setState({services: response})
+      // })
+
+      this.props.fetchRoomServices(this.props.room.title).then((response) => {
        this.setState({services: response})
       })
+
      // socket.emit('subscribe', {room: this.props.params.room})
         this.setState({connected: true})
     }
@@ -124,7 +129,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) { 
-  return bindActionCreators({ toggleService: serviceActions.fetchServiceData,  chooseService: serviceActions.chooseService, createService: serviceActions.saveService, newService: serviceActions.newService, fetchServicesList: serviceActions.fetchServicesList}, dispatch)
+  return bindActionCreators({ toggleService: serviceActions.fetchServiceData,  chooseService: serviceActions.chooseService, createService: serviceActions.saveService, newService: serviceActions.newService, fetchRoomServices: serviceActions.fetchRoomServices}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServicesContainer)

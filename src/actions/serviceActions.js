@@ -35,10 +35,10 @@ export function fetchServiceData() {
 
 }
 
-export function fetchServicesList(){
+export function fetchRoomServices(){
 console.log("get service list")
   return (dispatch) => {
-    return messageApi.fetchServiceList()
+    return messageApi.fetchRoomServices()
       .then((response) => {
         dispatch(updateServiceList(response))
       })

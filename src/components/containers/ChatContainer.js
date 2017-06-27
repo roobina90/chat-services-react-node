@@ -83,7 +83,7 @@ class ChatContainer extends Component {
     return (
       <Grid>
       Hello in room {this.props.params.room} bastards!
-      <ServicesContainer />
+      {/* <ServicesContainer /> */}
       <form>
           <FormGroup>
             <InputGroup>
