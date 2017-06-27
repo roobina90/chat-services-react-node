@@ -1,7 +1,7 @@
 import messageApi from '../api/messageApi';
 
 export function joinRoom(roomData) {
-  debugger
+  //debugger
   const payload = {
     messages: roomData.messages.data,
     services: roomData.services.data
@@ -31,7 +31,7 @@ export function fetchRoomData() {
   return (dispatch) => {
     return messageApi.fetchRoom()
       .then((response) => {
-        debugger
+        //debugger
         dispatch(joinRoom({ messages: response[0], services: response[1] }))
       })
   }

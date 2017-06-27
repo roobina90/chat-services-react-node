@@ -1,10 +1,14 @@
 import initialState from './initialState'
 
-export default function serviceReducer(state = initialState.services, action) {
+export default function serviceReducer(state = initialState.activeRoom, action) {
+  debugger
   switch (action.type) {
     case 'NEW_SERVICE': {
-      debugger;
-      return [...state, action.payload]
+      debugger
+     return Object.assign({}, action.payload.messages[0].room, { 
+        messages: [...action.payload.room.messages, action.payload.newMessage],
+        services: [...action.payload.room.services]
+      }) 
     }
     case 'UPDATE_SERVICE_LIST': {
       if (action.payload.data.length < 1) {

@@ -46,9 +46,8 @@ console.log("get service list")
   }
 }
 
-
-
-export function saveService(payload) {
+export function saveService(data) {
+  var payload = { name: data.name, price: data.price, isChosen: data.isChosen, room: data.room }
   return { type: 'NEW_SERVICE', payload }
 }
 

@@ -7,7 +7,7 @@ class MessageApi {
   }
 
   static fetchRoom() {
-    debugger
+    //debugger
     return axios.all([axios.get('/messages'), axios.get("/services")])
   }
 
