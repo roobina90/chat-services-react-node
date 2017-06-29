@@ -1,11 +1,12 @@
-# React Redux Starter Kit
+# Node Express Socket React Axios Mongo Mongoose
 
-For when you just can't has all the set-up anymore, you just can't. 
+Fun app = chat + chat rooms + adding and selecting services, mongodb
 
 ## Instructions
-
+* start your database
 * clone
 * `npm install`
 * `npm start`
 
-Write the codez.
+
+
